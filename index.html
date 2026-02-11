@@ -1,0 +1,436 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #e74c3c;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin: 20px 0;
+        }
+
+        .buttons {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background: #e74c3c;
+            color: white;
+            transition: transform 0.2s;
+        }
+
+            #yesBtn:hover {
+                transform: scale(1.1);
+                background: #c0392b;
+            }
+
+        #noBtn {
+            background: #95a5a6;
+            color: white;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+            #noBtn.floating {
+                position: fixed;
+                z-index: 1000;
+            }
+
+        .success {
+            display: none;
+        }
+
+            .success.show {
+                display: block;
+                animation: fadeIn 0.5s;
+            }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hearts {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        .continue-btn {
+            background: #e74c3c;
+            color: white;
+            margin-top: 30px;
+        }
+
+            .continue-btn:hover {
+                transform: scale(1.05);
+                background: #c0392b;
+            }
+
+        /* Date Plan Styles */
+        .date-plan {
+            display: none;
+        }
+
+            .date-plan.show {
+                display: block;
+                animation: fadeIn 0.5s;
+            }
+
+            .date-plan h1 {
+                color: #e74c3c;
+                font-size: 2.8em;
+                margin-bottom: 10px;
+            }
+
+            .date-plan .subtitle {
+                color: #764ba2;
+                font-size: 1.3em;
+                margin-bottom: 30px;
+                font-style: italic;
+            }
+
+        .date-card {
+            background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .date-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #e74c3c;
+        }
+
+            .date-section h3 {
+                color: #e74c3c;
+                font-size: 1.3em;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .date-section p {
+                color: #555;
+                font-size: 1.1em;
+                line-height: 1.6;
+            }
+
+        .activities {
+            list-style: none;
+            padding: 0;
+        }
+
+            .activities li {
+                padding: 10px;
+                margin: 8px 0;
+                background: white;
+                border-radius: 8px;
+                color: #555;
+                font-size: 1.05em;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .activities li:before {
+                    content: "💕";
+                    font-size: 1.2em;
+                }
+
+        .special-note {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 1.1em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Question Page -->
+        <div id="question">
+            <h1>Will you be my Valentine? 💝</h1>
+            <div class="emoji">🥺</div>
+            <div class="buttons">
+                <button id="yesBtn" onclick="sayYes()">Yes! 💕</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <!-- Success Page -->
+        <div id="success" class="success">
+            <h1>Yay! 🎉</h1>
+            <div class="hearts">❤️💕💖💗💓</div>
+            <p style="font-size: 1.5em; color: #e74c3c;">I knew you'd say yes!</p>
+            <button class="continue-btn" onclick="showDatePlan()">See Our Date Plan! 💝</button>
+        </div>
+
+        <!-- Date Plan Page -->
+        <div id="datePlan" class="date-plan">
+            <h1>Our Perfect Day Together 💕</h1>
+            <p class="subtitle">A day made just for us</p>
+
+            <div class="date-card">
+                <div class="date-section">
+                    <h3>⏰ Time</h3>
+                    <p>The Whole Day!</p>
+                </div>
+
+                <div class="date-section">
+                    <h3>📅 When</h3>
+                    <p>Whenever we both can get a whole day off</p>
+                </div>
+
+                <div class="date-section">
+                    <h3>💑 Who</h3>
+                    <p>Just us! You and me</p>
+                </div>
+
+                <div class="date-section">
+                    <h3>✨ What We'll Do</h3>
+                    <ul class="activities">
+                        <li>Morning coffee together</li>
+                        <li>Hang out the whole day</li>
+                        <li>Watch movies</li>
+                        <li>Hit the gym</li>
+                        <li>Chinese dinner</li>
+                    </ul>
+                </div>
+
+                <div class="special-note">
+                    I Love You❤️
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        let buttonX = 0;
+        let buttonY = 0;
+        let buttonVelX = 0;
+        let buttonVelY = 0;
+        let isFloating = false;
+        let isHovering = false;
+        let lastHoverChange = 0;
+        let hoverResponseIndex = 0;
+
+        const hoverResponses = [
+            "💔",
+            "No",
+            "Why?",
+            "Please!",
+            "Try again"
+        ];
+
+        function animate() {
+            if (isFloating) {
+                // Apply velocity to position
+                buttonX += buttonVelX;
+                buttonY += buttonVelY;
+
+                // Apply friction to slow down
+                buttonVelX *= 0.92;
+                buttonVelY *= 0.92;
+
+                // Keep button within viewport bounds with padding
+                const padding = 50;
+                const cornerRadius = 200; // Radius to avoid corners
+
+                // Check bounds and bounce
+                if (buttonX < padding) {
+                    buttonX = padding;
+                    buttonVelX = Math.abs(buttonVelX);
+                }
+                if (buttonX > window.innerWidth - padding) {
+                    buttonX = window.innerWidth - padding;
+                    buttonVelX = -Math.abs(buttonVelX);
+                }
+                if (buttonY < padding) {
+                    buttonY = padding;
+                    buttonVelY = Math.abs(buttonVelY);
+                }
+                if (buttonY > window.innerHeight - padding) {
+                    buttonY = window.innerHeight - padding;
+                    buttonVelY = -Math.abs(buttonVelY);
+                }
+
+                // Avoid corners by adding repulsion force from each corner
+                const corners = [
+                    { x: 0, y: 0 }, // Top-left
+                    { x: window.innerWidth, y: 0 }, // Top-right
+                    { x: 0, y: window.innerHeight }, // Bottom-left
+                    { x: window.innerWidth, y: window.innerHeight } // Bottom-right
+                ];
+
+                corners.forEach(corner => {
+                    const dx = buttonX - corner.x;
+                    const dy = buttonY - corner.y;
+                    const distToCorner = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distToCorner < cornerRadius) {
+                        // Apply repulsion from corner
+                        const angle = Math.atan2(dy, dx);
+                        const repulsionStrength = (1 - distToCorner / cornerRadius) * 0.5;
+                        buttonVelX += Math.cos(angle) * repulsionStrength;
+                        buttonVelY += Math.sin(angle) * repulsionStrength;
+                    }
+                });
+
+                // Apply new position
+                noBtn.style.left = buttonX + 'px';
+                noBtn.style.top = buttonY + 'px';
+                noBtn.style.transform = 'translate(-50%, -50%)';
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        document.addEventListener('mousemove', function (e) {
+            if (document.getElementById('question').style.display === 'none') return;
+
+            const btnRect = noBtn.getBoundingClientRect();
+
+            // Get button center
+            const btnCenterX = btnRect.left + btnRect.width / 2;
+            const btnCenterY = btnRect.top + btnRect.height / 2;
+
+            // Calculate distance from mouse to button center
+            const distanceX = e.clientX - btnCenterX;
+            const distanceY = e.clientY - btnCenterY;
+            const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            // Check if mouse is actually hovering over the button
+            const isMouseOverButton = e.clientX >= btnRect.left &&
+                e.clientX <= btnRect.right &&
+                e.clientY >= btnRect.top &&
+                e.clientY <= btnRect.bottom;
+
+            // Handle hover state changes with 1 second cooldown
+            const currentTime = Date.now();
+            if (isMouseOverButton && !isHovering && (currentTime - lastHoverChange) > 1000) {
+                isHovering = true;
+                lastHoverChange = currentTime;
+                noBtn.textContent = hoverResponses[hoverResponseIndex];
+                hoverResponseIndex = (hoverResponseIndex + 1) % hoverResponses.length;
+
+                // Flash the button
+                noBtn.style.background = '#e74c3c';
+                setTimeout(() => {
+                    noBtn.style.background = '#95a5a6';
+                }, 300);
+            } else if (!isMouseOverButton && isHovering) {
+                isHovering = false;
+            }
+
+            // Detection radius - starts affecting the button from further away
+            const detectionRadius = 250;
+
+            if (distance < detectionRadius) {
+                if (!isFloating) {
+                    // Switch to fixed positioning
+                    noBtn.classList.add('floating');
+                    buttonX = btnCenterX;
+                    buttonY = btnCenterY;
+                    isFloating = true;
+                }
+
+                // Calculate escape direction (away from mouse)
+                const angle = Math.atan2(-distanceY, -distanceX);
+
+                // Calculate repulsion force based on distance (closer = MUCH stronger)
+                // Using cubic power for even more dramatic acceleration when close
+                const proximityFactor = 1 - (distance / detectionRadius);
+                const repulsionStrength = Math.pow(proximityFactor, 3); // Cubed for aggressive acceleration
+
+                // Apply force to velocity with much higher strength
+                const forceMagnitude = repulsionStrength * 3.5;
+                buttonVelX += Math.cos(angle) * forceMagnitude;
+                buttonVelY += Math.sin(angle) * forceMagnitude;
+
+                // Increased maximum velocity
+                const maxVel = 35;
+                const currentVel = Math.sqrt(buttonVelX * buttonVelX + buttonVelY * buttonVelY);
+                if (currentVel > maxVel) {
+                    buttonVelX = (buttonVelX / currentVel) * maxVel;
+                    buttonVelY = (buttonVelY / currentVel) * maxVel;
+                }
+                }
+            }
+        });
+
+        function sayYes() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('success').classList.add('show');
+        }
+
+        function showDatePlan() {
+            document.getElementById('success').style.display = 'none';
+            document.getElementById('datePlan').classList.add('show');
+        }
+    </script>
+</body>
+</html>
